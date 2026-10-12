@@ -98,8 +98,8 @@ Proje standart Node.js ortamında **5 dakikadan kısa sürede** kurulup çalış
 
 ### 1. Depoyu klonlayın ve klasöre girin:
 ```bash
-git clone <repo-url>
-cd block
+git clone https://github.com/Ulku2706/pru-academy.git
+cd pru-academy
 ```
 
 ### 2. Bağımlılıkları yükleyin:
