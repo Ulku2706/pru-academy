@@ -27,21 +27,26 @@ Kulüpte yazın yaşanan ve yeni dönemde de her eğitim programında tekrarlana
 
 ## 4. Özellikler
 
-### Çalışanlar (Tamamlananlar)
+### Çalışanlar (Canlı / Tamamlananlar)
 * ✅ **Aşama Kilit Sistemi (Progress Gatekeeper):** 1. haftanın notu teslim edilmeden 2. haftanın kilidinin açılmasını engelleyen dinamik durum yönetimi.
-* ✅ **PRU AI Mentor (Entegre Chatbot):** Web3 konularına hakim, pedagojik açıklamalar yapan ve öğrenciyle karşılıklı kavram tartışması yürüten sohbet motoru.
+* ✅ **PRU AI Mentor (Entegre Chatbot):** Web3 konularına hakim, pedagojik açıklamalar yapan ve öğrenciyle karşılıklı kavram tartışması yürüten çok katmanlı gerçek sohbet motoru (ücretsiz uç nokta + fallback mimarisi).
+* ✅ **Sohbet Geçmişi (Chat History):** LocalStorage üzerinde kalıcı hafızaya sahip, oturumlar arası geçiş yapılabilen tam işlevli sohbet geçmişi paneli.
 * ✅ **AI Not Sentezi & Tek Tıkla Kilit Açma:** Öğrencinin konuşmalarından ve kazanımlarından 3 maddelik resmi özet notu üretip sisteme kaydeden ve bir sonraki haftanın kilidini açan mekanizma.
-* ✅ **Kulüp Liderlik Tablosu (Leaderboard):** XP, tamamlanan hafta sayısı ve günlük streak takibiyle sosyal teşvik sağlayan şeffaf sıralama.
-* ✅ **Yönetici Radarı (Admin Dashboard):** Aşama aşama öğrenci dağılımı hunisi, 4+ gündür takılan üyelere yönelik alarm listesi ve AI'a en çok sorulan soruların pedagojik analizi.
-* ✅ **Soulbound Token (SBT) Akıllı Sözleşmesi:** Arbitrum Sepolia testnetinde çalışan, devredilemez (non-transferable) ERC-721 başarı sertifikası sözleşmesi (`contracts/PRUCertificate.sol`).
-* ✅ **Onchain Explorer Entegrasyonu:** Sertifika mint edildiğinde tx hash üretimi, token ID ataması ve Arbiscan blok gezgini link doğrulaması.
-* ✅ **Demo Sıfırlama & Hızlı İlerleme Modu:** Canlı sunumda jüriye tüm akışı baştan sona ya da tek tıkla son aşamayı gösterebilmek için hızlı demo yardımcıları.
+* ✅ **Soulbound Token (SBT) Güvenli Sözleşmesi:** Arbitrum Sepolia testneti için yazılmış, devredilemez (non-transferable) ERC-721 başarı sertifikası sözleşmesi (`contracts/PRUCertificate.sol`). *Hackathon geri bildirimiyle `issueCertificate` fonksiyonuna `onlyOwner` denetimi eklenerek yetkisiz mint açığı kapatılmıştır.*
+* ✅ **Solidity Derleme & Gerçek Deploy Motoru:** `solc` ve `ethers` (v6) ile derleme (`compile.js`) ve canlı testnete işlem gönderen dağıtım altyapısı (`deploy.js`).
+* ✅ **Web3 Cüzdan & Ethers Bağlantısı:** Tarayıcı cüzdanı (`window.ethereum`) ve testnet sözleşmesi bağlandığında doğrudan blokzincir çağrısı yapmaya hazır mimari (`src/components/CertificateModal.tsx`).
+* ✅ **Demo Sıfırlama & Hızlı İlerleme Modu:** Canlı sunumda veya test sırasında tüm akışı baştan sona ya da tek tıkla son aşamayı gösterebilmek için geliştirici yardımcıları.
+
+### Demo / Simülasyon Kısımları (Prototip Aşamasındakiler)
+* ⚠️ **Sertifika Mint Demo Önizlemesi:** Henüz canlı testnete kontrat deploy edilmediğinde veya cüzdan bağlanmadığında arayüz yanıltıcı sahte başarı üretmek yerine açıkça **"Demo Önizleme Modu"** olarak etiketlenir ve örnek bir görsel önizleme sunar.
+* ⚠️ **Liderlik Tablosu & Yönetici Radarı Verisi:** 48 kulüp üyesinin aşama dağılımı, XP sıralaması ve tıkanan öğrenci listesi hackathon prototip aşamasında yerel örnek veri dosyasından (`src/data/mockStudents.ts`) okunmaktadır.
 
 ### Yarım Kalanlar
-* ⚠️ **Otomatik WhatsApp Bildirimi:** Yönetici radarında "WhatsApp'tan Dürt" butonu arayüzde çalışmakta olup, harici WhatsApp Business Cloud API entegrasyonu yerine kullanıcıyı hazır mesaj taslağıyla yönlendirme aşamasında bırakılmıştır.
+* ⚠️ **Otomatik WhatsApp Bildirimi:** Yönetici radarında "WhatsApp'tan Dürt" butonu arayüzde çalışmakta olup, kulüp için merkezi WhatsApp Business Cloud API entegrasyonu yerine kullanıcıyı hazır mesaj taslağıyla yönlendirme aşamasında bırakılmıştır.
 
-### Planlananlar
-* 📌 **Sesli AI Mentor:** Öğrencilerin mobilde yürürken sesli soru sorup podcast tadında yanıt dinleyebileceği WebRTC ses katmanı.
+### Planlananlar (Kulüp Ürünleştirme Yol Haritası)
+* 📌 **Merkezi Bulut Veritabanı (Supabase / PostgreSQL):** Öğrenci ilerleme verilerini yerel durumdan ortak bir veritabanına taşıyarak Yönetici Radarını tüm yönetim kuruluna canlı açmak.
+* 📌 **Arbitrum Sepolia / Ana Ağ Resmi Dağıtımı:** Kulüp adına resmi sözleşmeyi zincire çıkarıp doğrulamak (verify contract).
 * 📌 **DAO Snapshot Bağlantısı:** SBT sertifikasına sahip mezun üyelerin kulübün yönetim oylamalarında ekstra oy ağırlığına sahip olması.
 
 ---
@@ -52,17 +57,21 @@ Kulüpte yazın yaşanan ve yeni dönemde de her eğitim programında tekrarlana
 * **Frontend / Framework:** Next.js 14 (App Router), React 18, TypeScript
 * **Stil & Arayüz:** Tailwind CSS, Glassmorphism Web3 Dark Theme, Lucide Icons, Canvas-Confetti
 * **Akıllı Sözleşme (Smart Contract):** Solidity ^0.8.20 (ERC-721 Soulbound Token standardı)
-* **Web3 Kütüphaneleri:** Ethers.js v6
+* **Web3 Kütüphaneleri:** Ethers.js v6, Solc ^0.8.20
 * **Durum Yönetimi & Kalıcılık:** LocalStorage API (çevrimdışı çalışabilir, demo sırasında sunucu kesintisi yaşamaz)
-* **Backend API:** Next.js Route Handlers (`/api/chat`)
+* **Backend API:** Next.js Route Handlers (`/api/chat` - Hibrit AI motoru)
 
 ### Klasör Yapısı
 ```
 pru-ai-academy/
 ├── contracts/
-│   ├── PRUCertificate.sol        # Soulbound Token (SBT) akıllı sözleşmesi
+│   ├── PRUCertificate.sol        # Soulbound Token (SBT) akıllı sözleşmesi (onlyOwner yetkili)
+│   ├── PRUCertificate.json       # Derlenmiş ABI ve Bytecode artifact'ı
 │   └── scripts/
-│       └── deploy.js             # Testnet dağıtım betiği
+│       ├── compile.js            # solc tabanlı sözleşme derleyicisi
+│       └── deploy.js             # Ethers.js v6 canlı Arbitrum Sepolia dağıtım betiği
+├── scripts/
+│   └── test-validation.js        # CI mimari ve güvenlik doğrulama testi
 ├── src/
 │   ├── app/
 │   │   ├── api/
@@ -75,10 +84,11 @@ pru-ai-academy/
 │   │   ├── StatsBanner.tsx       # İlerleme çubuğu ve 4 temel gösterge
 │   │   ├── RoadmapView.tsx       # 4 haftalık aşama kilitli zaman çizelgesi
 │   │   ├── WeekDetailModal.tsx   # Ders notları ve kavram açıklamaları
-│   │   ├── AIMentorChat.tsx      # Entegre AI Chatbot ve not sentezleyici
+│   │   ├── AIMentorChat.tsx      # Entegre AI Chatbot, sohbet geçmişi ve not sentezleyici
 │   │   ├── LeaderboardView.tsx   # Şampiyonlar podyumu ve üye tablosu
 │   │   ├── AdminRadarView.tsx    # Tıkanan öğrenci radarı ve yönetim masası
-│   │   └── CertificateModal.tsx  # Soulbound diploma ve onchain gezgin doğrulaması
+│   │   ├── CertificateModal.tsx  # Soulbound diploma, cüzdan mint ve demo önizleme
+│   │   └── HackathonGuideView.tsx# Hackathon kuralları, geri bildirimler & yol haritası
 │   ├── data/
 │   │   ├── curriculum.ts         # 4 haftalık özgün Web3 müfredatı
 │   │   └── mockStudents.ts       # Kulüp üyeleri, sıralama ve analiz verileri
@@ -115,42 +125,56 @@ npm run dev
 ### 4. Tarayıcıda açın:
 Tarayıcınızda [http://localhost:3000](http://localhost:3000) adresine gidin.
 
-*(İsteğe bağlı)* Ortam değişkenleri için `.env.example` dosyasını `.env.local` olarak kopyalayabilirsiniz; ancak harici hiçbir anahtar olmadan da sistem yerleşik motoruyla eksiksiz ve canlı demoya hazır şekilde çalışır.
+*(İsteğe bağlı)* Ortam değişkenleri için `.env.example` dosyasını `.env.local` olarak kopyalayabilirsiniz; ancak harici hiçbir anahtar olmadan da sistem yerleşik hibrit motoruyla eksiksiz ve demoya hazır şekilde çalışır.
 
 ---
 
 ## 7. Onchain kısım
-* **Ağ Adı:** Arbitrum Sepolia Testnet
-* **Sözleşme Adı:** PRUCertificate (PRU-SBT)
-* **Sözleşme Adresi:** `0x3B89a4Fc5C4e8C5996b27E21b44B2720d29188F3`
-* **Explorer Linki:** [https://sepolia.arbiscan.io/address/0x3B89a4Fc5C4e8C5996b27E21b44B2720d29188F3](https://sepolia.arbiscan.io/address/0x3B89a4Fc5C4e8C5996b27E21b44B2720d29188F3)
 
-### Neden Onchain?
-Geleneksel üniversite kulübü sertifikaları (PDF ya da kağıt baskı) kolayca tahrif edilebilir, sahte düzenlenebilir ve üçüncü taraf kurumlarca (staj ve iş veren şirketlerce) doğrudan doğrulanamaz.
-Bu projede kullanılan **Soulbound Token (SBT)**:
-1. **Devredilemez (Non-transferable):** Başka bir cüzdana satılamaz veya aktarılamaz (`transferFrom` çağrıları kontrat seviyesinde revert eder).
-2. **Kalıcı Başarı Kanıtı:** Öğrencinin bizzat 4 haftalık modülü bitirdiğini matematiksel olarak ispatlar.
-3. **Şeffaf İtibar:** Mezun öğrenci CV'sine veya LinkedIn'ine cüzdan adresini eklediğinde şirketler Arbiscan üzerinden belgenin gerçekliğini tek tıkla doğrular.
+### Akıllı Sözleşme Mimarisi
+* **Sözleşme Adı:** `PRUCertificate.sol`
+* **Standart:** Soulbound Token (SBT) - Devredilemez ERC-721
+* **Ağ:** Arbitrum Sepolia Testnet (Chain ID: `421614`)
+* **RPC URL:** `https://sepolia-rollup.arbitrum.io/rpc`
+
+### Güvenlik Mimarisi (`onlyOwner`)
+Sözleşme, sertifika basma yetkisini (`issueCertificate`) yalnızca kontrat sahibine (kulüp yönetici cüzdanına) verir. Böylece kulüp harici kişilerin kendi kendilerine mezuniyet sertifikası basması matematiksel olarak engellenmiştir. Transfer fonksiyonları (`transferFrom`, `safeTransferFrom`) devredilemezlik kuralı gereği revert eder.
+
+### Testnete Dağıtım Adımları (Deployment)
+Proje içerisinde yer alan derleme ve dağıtım betikleriyle Arbitrum Sepolia'ya dağıtım yapılabilir:
+
+```bash
+# 1. Sözleşmeyi derleyin:
+node contracts/scripts/compile.js
+
+# 2. Arbitrum Sepolia musluğundan (faucet) test ETH aldıktan sonra dağıtımı gerçekleştirin:
+$env:PRIVATE_KEY="cuzdan_ozel_anahtariniz"; node contracts/scripts/deploy.js
+```
+
+Dağıtım betiği tamamlandığında üretilen sözleşme adresi `.env.local` dosyasına otomatik kaydedilir. Arayüz bu adresi algıladığında doğrudan canlı cüzdan mint akışını devreye alır; sözleşme henüz dağıtılmadığında ise dürüst bir şekilde kullanıcıya **"Demo Önizleme Modu"** sunar.
 
 ---
 
 ## 8. Kulüp bunu nasıl devralır?
 * **Yayına Alma:** Proje Next.js tabanlı olduğu için kulübün GitHub hesabına bağlandığında **Vercel** veya **Netlify** üzerinde **0 TL maliyetle** tek tıkla ücretsiz yayına alınabilir.
-* **Akıllı Sözleşme:** Testnet sözleşmesi Arbitrum Sepolia üzerinde dağıtılmıştır (musluktan alınan test ETH ile 0 maliyet). Kulüp ileride ana ağa (Arbitrum One veya Base) geçmek isterse işlem başına ~0.01$ gibi ihmal edilebilir bir gas maliyeti oluşur.
-* **Bakım & Güncelleme:** `src/data/curriculum.ts` dosyasındaki JSON yapısına yeni haftalar veya konular eklemek için tek bir dosyanın güncellenmesi yeterlidir; kodlama bilgisi gerektirmez.
+* **Akıllı Sözleşme:** Arbitrum Sepolia üzerinde test ETH ile 0 maliyetle çalışır. Kulüp ileride ana ağa (Arbitrum One veya Base) geçmek isterse işlem başına ~0.01$ gibi ihmal edilebilir bir gas maliyeti oluşur.
+* **Ortak Veritabanına Geçiş:** Proje modüler TypeScript yapısında olduğu için `src/data/mockStudents.ts` veri okuma katmanı tek bir SQL/Supabase istemcisiyle değiştirilerek 1 gün içinde canlı veri tabanına bağlanabilir.
+* **Müfredat Güncelleme:** `src/data/curriculum.ts` dosyasındaki JSON yapısına yeni haftalar veya konular eklemek için tek bir dosyanın güncellenmesi yeterlidir; kodlama bilgisi gerektirmez.
 
 ---
 
 ## 9. Hazır kullanılanlar ve yapay zeka kullanımı
-* **Açık Kaynak Kütüphaneler:** Next.js 14, Tailwind CSS, Lucide React (ikon seti), Canvas-Confetti (kutlama animasyonları), Ethers.js v6.
+* **Açık Kaynak Kütüphaneler:** Next.js 14, Tailwind CSS, Lucide React (ikon seti), Canvas-Confetti (kutlama animasyonları), Ethers.js v6, Solc.
 * **Yapay Zeka Kullanımı:** 
   - Hackathon kuralları doğrultusunda, projenin fikir mimarisinin oluşturulması, modüler React bileşenlerinin yazılması, TypeScript tiplerinin denetlenmesi ve Solidity Soulbound akıllı sözleşmesinin geliştirilmesinde Google Antigravity / Gemini yapay zeka araçlarından pair-programming desteği alınmıştır.
-  - Uygulama içindeki pedagojik AI Mentor yanıt ve özet motoru, kulüp üyelerine özel prompting ve dil modeli mimarisiyle entegre edilmiştir.
+  - Uygulama içindeki pedagojik AI Mentor yanıt ve özet motoru, kulüp üyelerine özel prompting ve hibrit dil modeli mimarisiyle entegre edilmiştir.
 
 ---
 
 ## 10. Takım
-* **PRU Blockchain Kulübü Geliştirme Takımı**
-  - **Fikir & Ürün Tasarımı:** Kulüp içi eğitim tıkanıklığı deneyiminin tespiti, mentor diyalog akışı ve liderlik tablosu mekanizması.
-  - **Yapay Zeka & Prompt Mühendisliği:** AI Mentor pedagojik yanıt motoru, not sentezleme algoritmaları ve sistem mimarisi.
-  - **Frontend & Web3 Entegrasyonu:** Next.js bileşenleri, Soulbound Token akıllı sözleşmesi ve testnet explorer doğrulaması.
+* **Ülkü Dilmen** (GitHub: [@Ulku2706](https://github.com/Ulku2706))
+  - **Rol:** Takım Lideri, Full-Stack & Web3 Geliştirici
+  - **Katkılar:** Ürün mimarisi, Next.js arayüz tasarımı, PRU AI Mentor çok katmanlı sohbet motoru ve sohbet geçmişi entegrasyonu, Solidity Soulbound akıllı sözleşmesi ve testnet derleme/dağıtım betikleri.
+* **PRU Blockchain Kulübü Çekirdek Takımı**
+  - **Rol:** Fikir Doğrulama, Topluluk Deneyimi & Müfredat Tasarımı
+  - **Katkılar:** Kulüp içi eğitim tıkanıklığı krizinin tespiti, 4 haftalık özgün Web3 müfredatı, liderlik tablosu puanlama dinamikleri ve hackathon sunumu.

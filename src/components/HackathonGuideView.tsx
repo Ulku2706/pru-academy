@@ -67,11 +67,11 @@ export const HackathonGuideView: React.FC = () => {
               onClick={() => setActiveTab("compliance")}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                 activeTab === "compliance"
-                  ? "bg-amber-500 text-black shadow-md shadow-amber-500/30 font-black"
-                  : "text-amber-400/80 hover:text-amber-300"
+                  ? "bg-cyan-500 text-black shadow-md shadow-cyan-500/30 font-black"
+                  : "text-cyan-400/80 hover:text-cyan-300"
               }`}
             >
-              Proje Uyumluluk Karnesi
+              Geri Bildirim & Yol Haritası
             </button>
           </div>
         </div>
@@ -330,66 +330,88 @@ export const HackathonGuideView: React.FC = () => {
           </div>
         </div>
       ) : (
-        /* PROJE UYUMLULUK KARNESİ TAB */
+        /* GERİ BİLDİRİM & YOL HARİTASI TAB */
         <div className="space-y-6">
-          <div className="bg-gray-900/60 border border-emerald-500/30 rounded-2xl p-6 sm:p-8 space-y-4">
-            <h3 className="text-lg font-bold text-white flex items-center space-x-2">
-              <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-              <span>PRU AI-Academy'nin Hackathon Kriterleri Karnesi (Hedef: 100/100 + 10 Bonus)</span>
+          {/* Hackathon Sonuç & Puanlama Kartı */}
+          <div className="bg-gray-900/60 border border-blue-500/30 rounded-2xl p-6 sm:p-8 space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-gray-800">
+              <div>
+                <span className="text-xs font-bold text-cyan-400 uppercase tracking-wider">PRU Blockchain Kulübü Hackathon'u</span>
+                <h3 className="text-xl font-black text-white mt-0.5">Resmi Değerlendirme & Sonuç</h3>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="px-3.5 py-1.5 rounded-xl bg-blue-500/10 border border-blue-500/30 text-center">
+                  <div className="text-[10px] text-gray-400">Sıralama</div>
+                  <div className="text-base font-black text-white">2. / 4 Takım</div>
+                </div>
+                <div className="px-3.5 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-center">
+                  <div className="text-[10px] text-gray-400">Jüri Puanı</div>
+                  <div className="text-base font-black text-emerald-400">8.90 / 10 <span className="text-[10px] font-normal text-emerald-300">(En Yüksek)</span></div>
+                </div>
+                <div className="px-3.5 py-1.5 rounded-xl bg-purple-500/10 border border-purple-500/30 text-center">
+                  <div className="text-[10px] text-gray-400">Final Skoru</div>
+                  <div className="text-base font-black text-purple-300">7.48 / 10</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+              <div className="p-4 rounded-xl bg-gray-950/70 border border-emerald-500/20 space-y-2">
+                <h4 className="font-bold text-emerald-400 text-xs flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4" /> Güçlü Yönler (Jüri & AI Notları)
+                </h4>
+                <ul className="text-xs text-gray-300 space-y-1.5 list-disc list-inside">
+                  <li><strong>En Kulübe Özgü Problem:</strong> "Not yazmadan geçilmez" kuralının yarattığı ghosting krizini doğrudan çözüyor.</li>
+                  <li><strong>Özgün Sohbetten Not Sentezi:</strong> Ödev yükünü kaldırıp diyalogdan 3 maddelik ilerleme kanıtı çıkarma ürün fikri.</li>
+                  <li><strong>Gerçek LLM Entegrasyonu:</strong> Yapay zeka sohbeti dinamik ve çok katmanlı çalışıyor.</li>
+                  <li><strong>Temiz Mimari & Sıfır Hata:</strong> TypeScript ile hatasız derlenen, bileşenleri ayrılmış ve jüriden en yüksek puanı alan proje.</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-xl bg-gray-950/70 border border-amber-500/20 space-y-2">
+                <h4 className="font-bold text-amber-400 text-xs flex items-center gap-1.5">
+                  <Target className="w-4 h-4" /> Geri Bildirime Göre Yapılan Düzeltmeler
+                </h4>
+                <ul className="text-xs text-gray-300 space-y-1.5 list-disc list-inside">
+                  <li><strong>Sözleşme Güvenliği:</strong> <code className="text-cyan-300">issueCertificate</code> fonksiyonuna <code className="text-cyan-300">onlyOwner</code> denetimi eklendi.</li>
+                  <li><strong>Gerçek Derleme & Deploy:</strong> <code className="text-cyan-300">solc</code> ve <code className="text-cyan-300">ethers</code> ile gerçek testnet deploy betiği yazıldı.</li>
+                  <li><strong>Dürüst Etiketleme:</strong> Kontrat bağlı değilse "Demo Önizleme", bağlıysa gerçek zincir çağrısı çalışacak şekilde ayrıldı.</li>
+                  <li><strong>Sohbet Geçmişi:</strong> Çoklu oturum ve sohbet geçmişi (LocalStorage) sisteme eklendi.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* Kulüp Ürününe Dönüştürme Yol Haritası */}
+          <div className="bg-gray-900/60 border border-gray-800 rounded-2xl p-6 space-y-4">
+            <h3 className="text-base font-bold text-white flex items-center gap-2">
+              <Layers className="w-5 h-5 text-cyan-400" />
+              <span>Kulüp Kullanımına Alma & Devralma Yol Haritası</span>
             </h3>
 
-            <div className="space-y-3 pt-2">
-              <div className="p-4 rounded-xl bg-gray-950/80 border border-gray-800 flex items-start space-x-3">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="font-bold text-white text-xs">Jüri: Kulübe Fayda (%30) & Çalışan Ürün (%25)</h4>
-                  <p className="text-gray-400 text-xs mt-0.5">
-                    Kulübün yazın yaşadığı eğitim tıkanıklığını ve ödev yazma bariyerini sıfırlayan doğrudan çalışan bir çözüm.
-                    Demoda 1. haftadan AI ile sohbet edip not çıkarma ve SBT diplomayı mint etme akışı uçtan uca çalışıyor.
-                  </p>
-                </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+              <div className="p-4 rounded-xl bg-gray-950/80 border border-gray-800 space-y-2">
+                <div className="w-6 h-6 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-xs">1</div>
+                <div className="font-bold text-white">Canlı Sepolia Dağıtımı</div>
+                <p className="text-gray-400 text-[11px] leading-relaxed">
+                  Kulüp cüzdanına test ETH alınıp <code className="text-cyan-300">node contracts/scripts/deploy.js</code> çalıştırılarak sözleşme Arbitrum Sepolia'ya dağıtılır.
+                </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-gray-950/80 border border-gray-800 flex items-start space-x-3">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="font-bold text-white text-xs">Yapay Zeka: Kod Kalitesi (%25) & Tamamlanmışlık (%20)</h4>
-                  <p className="text-gray-400 text-xs mt-0.5">
-                    Modüler TypeScript ve React mimarisi, Solidity Soulbound kontratı, sıfır derleme hatası, .env şablonu ve repo içinde hiçbir gizli anahtar bulundurulmaması.
-                  </p>
-                </div>
+              <div className="p-4 rounded-xl bg-gray-950/80 border border-gray-800 space-y-2">
+                <div className="w-6 h-6 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-xs">2</div>
+                <div className="font-bold text-white">Ortak Veritabanı</div>
+                <p className="text-gray-400 text-[11px] leading-relaxed">
+                  Yönetici radarının kulüp üyelerini canlı takip edebilmesi için Supabase / PostgreSQL ile merkezi üye ilerleme tablosu bağlanır.
+                </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-gray-950/80 border border-gray-800 flex items-start space-x-3">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="font-bold text-white text-xs">Yapay Zeka: Dokümantasyon (%15) & Devralınabilirlik (%10)</h4>
-                  <p className="text-gray-400 text-xs mt-0.5">
-                    README.md dosyasında rehberin istediği 10 zorunlu başlık eksiksiz oluşturuldu.
-                    Vercel üzerinde 0 TL maliyetle tek tıkla çalıştırılabilir ve kulüp kolayca devralabilir.
-                  </p>
-                </div>
-              </div>
-
-              <div className="p-4 rounded-xl bg-gray-950/80 border border-gray-800 flex items-start space-x-3">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="font-bold text-white text-xs">Katılımcı Oylaması: Kullanım İsteği (%40) & Yaratıcılık (%20)</h4>
-                  <p className="text-gray-400 text-xs mt-0.5">
-                    Üyelerin ödev yapma stresini kaldırıp sevdikleri bir Chatbot ile konuşarak seviye atlaması Duolingo tarzı oyunlaştırmayla katılımcıların en çok oy vereceği akıştır.
-                  </p>
-                </div>
-              </div>
-
-              <div className="p-4 rounded-xl bg-amber-950/20 border border-amber-500/30 flex items-start space-x-3">
-                <Award className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="font-bold text-amber-400 text-xs">Onchain Bonusu: Tam 10 Puan Kriteri (10/10)</h4>
-                  <p className="text-gray-300 text-xs mt-0.5">
-                    Soulbound Token (devredilemez sertifika) zorlama değil; eğitimin gerçek başarısını doğrulamak için şarttır.
-                    Arbitrum Sepolia üzerinde kontrat adresi ve Arbiscan linkiyle arayüze doğrudan bağlıdır.
-                  </p>
-                </div>
+              <div className="p-4 rounded-xl bg-gray-950/80 border border-gray-800 space-y-2">
+                <div className="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">3</div>
+                <div className="font-bold text-white">Vercel Ücretsiz Yayın</div>
+                <p className="text-gray-400 text-[11px] leading-relaxed">
+                  GitHub reposu kulüp organizasyonuna forklanarak Vercel üzerinde 0 TL maliyetle anında canlıya alınır.
+                </p>
               </div>
             </div>
           </div>

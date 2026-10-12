@@ -36,6 +36,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
 }) => {
   const [isMinting, setIsMinting] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [mintMode, setMintMode] = useState<"demo" | "real">("demo");
 
   if (!isOpen) return null;
 
@@ -45,11 +46,36 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   const handleMintCertificate = async () => {
     setIsMinting(true);
     try {
-      // Simulate onchain transaction delay
-      await new Promise((resolve) => setTimeout(resolve, 1800));
+      // Check if user has window.ethereum and contract is deployed
+      if (typeof window !== "undefined" && (window as any).ethereum && process.env.NEXT_PUBLIC_CONTRACT_ADDRESS) {
+        try {
+          const { ethers } = await import("ethers");
+          const provider = new ethers.BrowserProvider((window as any).ethereum);
+          const signer = await provider.getSigner();
+          const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
+          const abi = ["function issueCertificate(address student, string studentName, string studentNo, uint256 totalXP, string metadataURI) returns (uint256)"];
+          const contract = new ethers.Contract(contractAddress, abi, signer);
 
+          const tx = await contract.issueCertificate(
+            await signer.getAddress(),
+            student.name,
+            student.studentNo,
+            student.totalXP,
+            "ipfs://pru-academy-cert"
+          );
+          const receipt = await tx.wait();
+          confetti({ particleCount: 120, spread: 80, origin: { y: 0.5 } });
+          onClaimSuccess(receipt.hash, "#1");
+          return;
+        } catch (web3Err) {
+          console.warn("Web3 doğrudan mint başarısız oldu veya cüzdan reddetti, demo önizlemesi kullanılıyor:", web3Err);
+        }
+      }
+
+      // Demo simulation fallback
+      await new Promise((resolve) => setTimeout(resolve, 1800));
       const txHash = generateDemoTxHash();
-      const tokenId = "#14";
+      const tokenId = "#14 (Demo)";
 
       try {
         confetti({
@@ -86,8 +112,13 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
               <Award className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-white">PRU Onchain Soulbound Diploma (SBT)</h3>
-              <p className="text-xs text-gray-400">Doğrulanabilir Web3 Başarı Sertifikası</p>
+              <div className="flex items-center space-x-2">
+                <h3 className="text-base font-bold text-white">PRU Onchain Soulbound Diploma (SBT)</h3>
+                <span className="px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/30 text-[10px] font-bold">
+                  Demo Önizleme
+                </span>
+              </div>
+              <p className="text-xs text-gray-400">Doğrulanabilir Web3 Başarı Sertifikası (Prototip)</p>
             </div>
           </div>
 

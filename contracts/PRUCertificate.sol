@@ -104,6 +104,7 @@ contract PRUCertificate is IERC721Metadata {
 
     /**
      * @notice Öğrenciye Soulbound Mezuniyet Rozeti basar.
+     * @dev Yalnızca sözleşme sahibi (Kulüp Yöneticisi) yetkilidir.
      */
     function issueCertificate(
         address student,
@@ -111,8 +112,7 @@ contract PRUCertificate is IERC721Metadata {
         string calldata studentNo,
         uint256 totalXP,
         string calldata metadataURI
-    ) external returns (uint256) {
-        // Kulüp yöneticisi veya self-claim için (demo kolaylığı)
+    ) external onlyOwner returns (uint256) {
         if (hasCertificate[student]) revert AlreadyHasCertificate();
 
         uint256 tokenId = _nextTokenId++;

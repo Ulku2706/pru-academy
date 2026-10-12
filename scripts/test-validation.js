@@ -1,13 +1,12 @@
 /**
- * PRU AI-Academy Otomatik Sistem & Kural Doğrulama Testi
- * Yapay Zeka (AI) değerlendiricisinin kod kalitesini, mimarisini ve tamamlanmışlığını
- * %100 doğrulayabilmesi için test paketi.
+ * PRU AI-Academy Otomasyon & Sistem Doğrulama Test Paketi
+ * Proje mimarisi, sözleşme güvenliği ve repo bütünlüğünü denetleyen CI testi.
  */
 
 const fs = require("fs");
 const path = require("path");
 
-console.log("🔍 PRU AI-Academy Doğrulama Testleri Başlatılıyor...\n");
+console.log("🔍 PRU AI-Academy Sistem Doğrulama Testi Başlatılıyor...\n");
 
 let passedTests = 0;
 let totalTests = 0;
@@ -23,7 +22,7 @@ function assert(condition, message) {
   }
 }
 
-// 1. README ve 10 Zorunlu Başlık Kontrolü
+// 1. Dokümantasyon & Zorunlu Bölüm Kontrolü
 const readmePath = path.join(__dirname, "..", "README.md");
 assert(fs.existsSync(readmePath), "README.md dosyası repo kökünde mevcut");
 
@@ -42,25 +41,30 @@ const mandatoryHeadings = [
 ];
 
 mandatoryHeadings.forEach((h) => {
-  assert(readmeContent.includes(h), `README Zorunlu Başlık: '${h}' mevcut`);
+  assert(readmeContent.includes(h), `README Standart Başlık: '${h}' mevcut`);
 });
 
-// 2. Akıllı Sözleşme Doğrulaması
+// 2. Akıllı Sözleşme & Güvenlik Doğrulaması
 const contractPath = path.join(__dirname, "..", "contracts", "PRUCertificate.sol");
 assert(fs.existsSync(contractPath), "contracts/PRUCertificate.sol mevcut");
 
 const contractContent = fs.readFileSync(contractPath, "utf-8");
 assert(contractContent.includes("SoulboundTokenCannotBeTransferred"), "Sözleşmede devredilemezlik (Soulbound) kuralı uygulandı");
-assert(contractContent.includes("issueCertificate"), "issueCertificate fonksiyonu mevcut");
+assert(contractContent.includes("issueCertificate") && contractContent.includes("onlyOwner"), "issueCertificate fonksiyonunda onlyOwner yetki denetimi uygulandı");
 
-// 3. Güvenlik & Gizli Anahtar Kontrolü (Repoda secret olmaması)
-assert(!readmeContent.includes("0xprivatekey"), "README dosyasında açık özel anahtar yok");
+const artifactPath = path.join(__dirname, "..", "contracts", "PRUCertificate.json");
+assert(fs.existsSync(artifactPath), "Derlenmiş sözleşme artifact'ı (PRUCertificate.json) mevcut");
+
+// 3. Güvenlik & Gizlilik Denetimi
+assert(!readmeContent.includes("0xprivatekey"), "README dosyasında açık özel anahtar sızıntısı yok");
 assert(fs.existsSync(path.join(__dirname, "..", ".gitignore")), ".gitignore dosyası mevcut");
-assert(fs.existsSync(path.join(__dirname, "..", ".env.example")), ".env.example ortam şablonu mevcut");
+assert(fs.existsSync(path.join(__dirname, "..", ".env.example")), ".env.example şablon dosyası mevcut");
 
-// 4. Müfredat & Veri Bütünlüğü
+// 4. Veri Bütünlüğü & Müfredat
 const curriculumPath = path.join(__dirname, "..", "src", "data", "curriculum.ts");
-assert(fs.existsSync(curriculumPath), "Müfredat veri dosyası mevcut");
+assert(fs.existsSync(curriculumPath), "Müfredat veri modeli (curriculum.ts) mevcut");
 
-console.log(`\n🎉 SONUÇ: ${passedTests} / ${totalTests} test başarıyla tamamlandı!`);
-console.log("🚀 Yapay Zeka Değerlendirmesi: Kod Kalitesi ve Tamamlanmışlık Kriterleri %100 Karşılandı.");
+const mockStudentsPath = path.join(__dirname, "..", "src", "data", "mockStudents.ts");
+assert(fs.existsSync(mockStudentsPath), "Kulüp üye veri modeli (mockStudents.ts) mevcut");
+
+console.log(`\n📊 Doğrulama Tamamlandı: ${passedTests} / ${totalTests} test başarıyla geçti.`);
